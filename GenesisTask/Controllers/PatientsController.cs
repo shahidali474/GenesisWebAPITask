@@ -89,6 +89,12 @@ namespace GenesisTask.API.Controllers
         public async Task<ActionResult<IEnumerable<PatientDto>>> GetPatientsByCriteria(int? age, string gender, string disease)
         {
             var patients = await _patientRepository.GetPatientsByCriteria(age, gender, disease);
+
+            if (patients == null || !patients.Any())
+            {
+                return NotFound("No patients found with the specified criteria.");
+            }
+
             var patientDtos = patients.Select(patient => patient.MapToDto());
             return Ok(patientDtos);
         }
