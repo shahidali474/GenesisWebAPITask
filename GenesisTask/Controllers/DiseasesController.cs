@@ -58,7 +58,7 @@ namespace GenesisTask.API.Controllers
                 {
                     return NotFound();
                 }
-
+                existingDisease.Name = diseaseDto.Name;
                 await _diseaseRepository.Update(existingDisease);
                 return NoContent();
             }
