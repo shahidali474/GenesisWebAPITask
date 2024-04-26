@@ -20,6 +20,17 @@ namespace GenesisTask.API
             services.AddSwaggerGen();
             services.AddCoreComponents();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowReactApp",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
+
             services.AddDbContext<GenesisTaskContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
@@ -34,6 +45,7 @@ namespace GenesisTask.API
 
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseCors("AllowReactApp");
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
