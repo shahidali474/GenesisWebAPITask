@@ -10,7 +10,8 @@ namespace GenesisTask.Core.Extensions
             return new DoctorDto
             {
                 Id = doctor.Id,
-                Name = doctor.Name
+                Name = doctor.Name,
+                Speciality = doctor.Speciality,
             };
         }
         public static Doctor MapToModel(this DoctorDto doctorDto)
@@ -18,7 +19,8 @@ namespace GenesisTask.Core.Extensions
             return new Doctor
             {
                 Id = doctorDto.Id,
-                Name = doctorDto.Name
+                Name = doctorDto.Name,
+                Speciality = doctorDto.Speciality,
             };
         }
     }

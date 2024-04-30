@@ -60,6 +60,7 @@ namespace GenesisTask.API.Controllers
                 }
 
                 existingDoctor.Name = doctorDto.Name;
+                existingDoctor.Speciality = doctorDto.Speciality;
                 await _doctorRepository.Update(existingDoctor);
                 return NoContent();
             }
