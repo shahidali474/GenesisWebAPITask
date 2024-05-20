@@ -48,7 +48,7 @@ namespace GenesisTask.API.Controllers
         {
             if (id != doctorDto.Id)
             {
-                return BadRequest("Doctor ID mismatch");
+                return BadRequest("Doctor ID Mismatch");
             }
 
             try
