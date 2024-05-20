@@ -62,11 +62,4 @@ public class PatientRepository : IPatientRepository
 
         return await query.ToListAsync();
     }
-
-    public Patient GetPatientWithVisits(int patientId)
-    {
-        return _context.Patients
-            .Include(p => p.Visits)
-            .FirstOrDefault(p => p.Id == patientId);
-    }
 }

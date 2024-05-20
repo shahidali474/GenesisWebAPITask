@@ -2,7 +2,6 @@
 using GenesisTask.Core.Interface;
 using Microsoft.AspNetCore.Mvc;
 using GenesisTask.Core.Extensions;
-using GenesisTask.Data.Models;
 
 namespace GenesisTask.API.Controllers
 {
@@ -11,42 +10,19 @@ namespace GenesisTask.API.Controllers
     public class PatientsController : ControllerBase
     {
         private readonly IPatientRepository _patientRepository;
-        private readonly IDoctorRepository _doctorRepository;
 
-        public PatientsController(IPatientRepository patientRepository, IDoctorRepository doctorRepository)
+        public PatientsController(IPatientRepository patientRepository)
         {
             _patientRepository = patientRepository;
-            _doctorRepository = doctorRepository;
         }
-
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<PatientDto>>> GetAllPatients()
-        //{
-        //    var patients = await _patientRepository.GetAll();
-        //    var patientDtos = patients.Select(patient => patient.MapToDto());
-
-        //    return Ok(patientDtos);
-        //}
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PatientDto>>> GetAllPatients()
         {
             var patients = await _patientRepository.GetAll();
-
-            var patientDtos = patients.Select(async patient =>
-            {
-                var doctorData = await _doctorRepository.GetById(patient.Id);
-                var data = doctorData.MapToDto();
-                var patientDto = patient.MapToDto();
-                data.DoctorData = doctorData.Select(item => new SelectListItem { Value = item.Value, Text = item.Text }).ToList();
-
-                return patientDto;
-            }); 
-            var patientDtoList = await Task.WhenAll(patientDtos);
-
-            return Ok(patientDtoList);
+            var patientDtos = patients.Select(patient => patient.MapToDto());
+            return Ok(patientDtos);
         }
-
 
         [HttpGet("{id}")]
         public async Task<ActionResult<PatientDto>> GetPatientById(int id)
